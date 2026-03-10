@@ -92,14 +92,24 @@ fi
 # Commit changes
 echo ""
 echo "💾 Committing changes..."
-git commit -m "$COMMIT_MESSAGE"
+if git commit -m "$COMMIT_MESSAGE"; then
+    echo "✅ Changes committed successfully"
+else
+    echo "ℹ️  No changes to commit (working tree clean)"
+fi
 
 # Check if remote exists
 if ! git remote | grep -q origin; then
     echo ""
     echo "⚠️  No remote 'origin' found"
-    echo "Add remote with: git remote add origin <repository-url>"
-    exit 1
+    echo ""
+    echo "To push to GitHub:"
+    echo "1. Create a repository on GitHub"
+    echo "2. Run: git remote add origin <your-repo-url>"
+    echo "3. Run: git push -u origin main"
+    echo ""
+    echo "Or run this script again after adding the remote."
+    exit 0
 fi
 
 # Get current branch
@@ -114,16 +124,21 @@ echo ""
 echo "🚀 Pushing to origin/$BRANCH..."
 
 # Push to remote
-if git push origin "$BRANCH"; then
+if git push origin "$BRANCH" 2>&1; then
     echo ""
     echo "✅ Successfully pushed to GitHub!"
     echo "📍 Branch: $BRANCH"
     echo "💬 Message: $COMMIT_MESSAGE"
 else
+    EXIT_CODE=$?
     echo ""
-    echo "❌ Push failed"
-    echo "💡 You may need to set upstream with:"
-    echo "   git push -u origin $BRANCH"
+    if [ $EXIT_CODE -eq 128 ]; then
+        echo "💡 First time pushing this branch?"
+        echo "   Run: git push -u origin $BRANCH"
+    else
+        echo "❌ Push failed with exit code: $EXIT_CODE"
+        echo "💡 Try: git push -u origin $BRANCH"
+    fi
     exit 1
 fi
 
