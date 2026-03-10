@@ -18,6 +18,8 @@ All samples are adapted to use **local Ollama** with the **granite3-dense** mode
 
 - ✅ Interactive Streamlit UI
 - ✅ Local LLM integration via Ollama
+- ✅ **Dynamic Model Selection** - Choose from your installed Ollama models via dropdown
+- ✅ **Vision Model Detection** - Automatic detection of vision-capable models
 - ✅ Three comprehensive demo modes
 - ✅ Document upload and processing
 - ✅ Real-time streaming responses

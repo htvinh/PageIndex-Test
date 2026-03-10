@@ -113,9 +113,46 @@ def main():
             st.success("✅ Configuration loaded")
         
         st.markdown("---")
+        st.subheader("🤖 Ollama Model Selection")
+        
+        # Get available models
+        from modules.ollama_client import OllamaClient
+        ollama_client = OllamaClient(config['ollama_url'], config['ollama_model'])
+        
+        if ollama_client.check_connection():
+            available_models = ollama_client.list_models()
+            
+            if available_models:
+                # Model selector
+                selected_model = st.selectbox(
+                    "Select Model:",
+                    available_models,
+                    index=available_models.index(config['ollama_model']) if config['ollama_model'] in available_models else 0,
+                    help="Choose from your installed Ollama models"
+                )
+                
+                # Update session state with selected model
+                st.session_state['selected_model'] = selected_model
+                
+                # Show model info
+                st.info(f"🎯 Using: {selected_model}")
+                
+                # Detect vision models
+                vision_keywords = ['vision', 'llava', 'bakllava', 'qwen', 'minicpm']
+                is_vision = any(keyword in selected_model.lower() for keyword in vision_keywords)
+                
+                if is_vision:
+                    st.success("👁️ Vision-capable model detected")
+                else:
+                    st.warning("⚠️ Text-only model (Vision RAG may not work)")
+            else:
+                st.error("No models found. Run: `ollama pull <model>`")
+        else:
+            st.error("Cannot connect to Ollama")
+        
+        st.markdown("---")
         st.subheader("📊 System Info")
         st.text(f"Ollama URL: {config['ollama_url']}")
-        st.text(f"Model: {config['ollama_model']}")
         
         st.markdown("---")
         st.subheader("📖 About")
@@ -152,7 +189,8 @@ def main():
         if config["issues"]:
             st.error("⚠️ Please configure your API key in `.env` file to use this demo")
         else:
-            demo1 = ChatQuickstartDemo(config["api_key"], config["ollama_url"], config["ollama_model"])
+            selected_model = st.session_state.get('selected_model', config["ollama_model"])
+            demo1 = ChatQuickstartDemo(config["api_key"], config["ollama_url"], selected_model)
             demo1.render()
     
     with tab2:
@@ -167,7 +205,8 @@ def main():
         if config["issues"]:
             st.error("⚠️ Please configure your API key in `.env` file to use this demo")
         else:
-            demo2 = SimpleRAGDemo(config["api_key"], config["ollama_url"], config["ollama_model"])
+            selected_model = st.session_state.get('selected_model', config["ollama_model"])
+            demo2 = SimpleRAGDemo(config["api_key"], config["ollama_url"], selected_model)
             demo2.render()
     
     with tab3:
@@ -182,7 +221,16 @@ def main():
         if config["issues"]:
             st.error("⚠️ Please configure your API key in `.env` file to use this demo")
         else:
-            demo3 = VisionRAGDemo(config["api_key"], config["ollama_url"], config["ollama_model"])
+            selected_model = st.session_state.get('selected_model', config["ollama_model"])
+            
+            # Check if model is vision-capable
+            vision_keywords = ['vision', 'llava', 'bakllava', 'qwen', 'minicpm']
+            is_vision = any(keyword in selected_model.lower() for keyword in vision_keywords)
+            
+            if not is_vision:
+                st.warning(f"⚠️ Model '{selected_model}' may not support vision. Consider using: llava, qwen-vl, or llama3.2-vision")
+            
+            demo3 = VisionRAGDemo(config["api_key"], config["ollama_url"], selected_model)
             demo3.render()
 
 if __name__ == "__main__":
