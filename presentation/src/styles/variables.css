@@ -1,0 +1,40 @@
+:root {
+  /* IBM Colors */
+  --ibm-blue: #0f62fe;
+  --ibm-white: #ffffff;
+  --ibm-black: #000000;
+  --ibm-gray-10: #f4f4f4;
+  --ibm-gray-20: #e0e0e0;
+  --ibm-gray-70: #525252;
+  --ibm-gray-100: #161616;
+  --ibm-color-mint: #6fdc8c;
+  --ibm-color-light-blue: #d0e2ff;
+  --ibm-color-yellow: #fdd13a;
+  
+  /* Typography */
+  --ibm-font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ibm-font-size-xs: 12pt;
+  --ibm-font-size-sm: 14pt;
+  --ibm-font-size-md: 16pt;
+  --ibm-font-size-lg: 18pt;
+  --ibm-font-size-xl: 20pt;
+  --ibm-font-size-2xl: 24pt;
+  --ibm-font-size-3xl: 28pt;
+  --ibm-font-size-4xl: 32pt;
+  --ibm-font-size-5xl: 42pt;
+  
+  /* Spacing */
+  --ibm-spacing-02: 8px;
+  --ibm-spacing-03: 16px;
+  --ibm-spacing-04: 24px;
+  --ibm-spacing-05: 32px;
+  --ibm-spacing-06: 48px;
+  --ibm-spacing-07: 64px;
+  --ibm-spacing-08: 80px;
+  
+  /* Border Radius */
+  --ibm-radius-sm: 2px;
+  --ibm-radius-md: 4px;
+}
+
+/* Made with Bob */

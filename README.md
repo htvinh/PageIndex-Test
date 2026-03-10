@@ -4,6 +4,18 @@ A comprehensive Streamlit-based UI application for testing PageIndex samples wit
 
 ![PageIndex Banner](https://pageindex.ai/static/images/pageindex_banner.jpg)
 
+## 📊 IBM Presentation
+
+**NEW:** Professional IBM Design System presentation showcasing this project!
+
+👉 **[View Presentation](presentation/)** - 20 slides covering architecture, implementation, and results
+
+Features:
+- IBM Design System v2.1 (Plex) styling
+- Interactive navigation
+- Export to PDF and PowerPoint
+- Full project documentation
+
 ## 🎯 Overview
 
 This application provides an interactive interface to test three PageIndex samples:

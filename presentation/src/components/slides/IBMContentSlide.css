@@ -1,0 +1,102 @@
+.ibm-content-slide {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--ibm-white);
+}
+
+.ibm-content-slide__header {
+  height: 80px;
+  background: var(--ibm-blue);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--ibm-spacing-08);
+}
+
+.ibm-content-slide__title {
+  font-size: var(--ibm-font-size-xl);
+  font-weight: 500;
+  color: var(--ibm-white);
+  margin: 0;
+}
+
+.ibm-content-slide__body {
+  flex: 1;
+  padding: var(--ibm-spacing-06) var(--ibm-spacing-08);
+  overflow: auto;
+}
+
+.ibm-content-slide__body.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ibm-spacing-06);
+}
+
+.ibm-content-slide__footer {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 var(--ibm-spacing-08);
+  border-top: 1px solid var(--ibm-gray-20);
+}
+
+.ibm-content-slide__number {
+  font-size: var(--ibm-font-size-sm);
+  color: var(--ibm-gray-70);
+}
+
+/* Content styling */
+.ibm-content-slide__body h3 {
+  font-size: var(--ibm-font-size-2xl);
+  font-weight: 500;
+  color: var(--ibm-gray-100);
+  margin-bottom: var(--ibm-spacing-04);
+}
+
+.ibm-content-slide__body p {
+  font-size: var(--ibm-font-size-md);
+  color: var(--ibm-gray-70);
+  line-height: 1.6;
+  margin-bottom: var(--ibm-spacing-04);
+}
+
+.ibm-content-slide__body ul {
+  list-style: none;
+  padding: 0;
+}
+
+.ibm-content-slide__body li {
+  font-size: var(--ibm-font-size-md);
+  color: var(--ibm-gray-70);
+  line-height: 1.8;
+  margin-bottom: var(--ibm-spacing-03);
+  padding-left: var(--ibm-spacing-05);
+  position: relative;
+}
+
+.ibm-content-slide__body li::before {
+  content: '•';
+  color: var(--ibm-blue);
+  font-weight: bold;
+  font-size: var(--ibm-font-size-lg);
+  position: absolute;
+  left: 0;
+}
+
+.ibm-content-slide__body strong {
+  color: var(--ibm-gray-100);
+  font-weight: 600;
+}
+
+.ibm-content-slide__body code {
+  background: var(--ibm-gray-10);
+  padding: 2px 8px;
+  border-radius: var(--ibm-radius-sm);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  color: var(--ibm-gray-100);
+}
+
+/* Made with Bob */

@@ -1,0 +1,33 @@
+.ibm-section-slide {
+  width: 100%;
+  height: 100%;
+  background: var(--ibm-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ibm-spacing-08);
+}
+
+.ibm-section-slide__content {
+  text-align: center;
+  max-width: 80%;
+}
+
+.ibm-section-slide__title {
+  font-size: var(--ibm-font-size-4xl);
+  font-weight: 600;
+  color: var(--ibm-white);
+  margin: 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.ibm-section-slide__subtitle {
+  font-size: var(--ibm-font-size-lg);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: var(--ibm-spacing-04);
+  line-height: 1.5;
+}
+
+/* Made with Bob */

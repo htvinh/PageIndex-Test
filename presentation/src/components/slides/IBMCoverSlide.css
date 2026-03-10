@@ -1,0 +1,64 @@
+.ibm-cover-slide {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+}
+
+.ibm-cover-slide.reverse {
+  flex-direction: row-reverse;
+}
+
+.ibm-cover-slide__content {
+  flex: 1;
+  background: var(--ibm-blue);
+  display: flex;
+  align-items: center;
+  padding: var(--ibm-spacing-08);
+}
+
+.ibm-cover-slide__text {
+  max-width: 90%;
+}
+
+.ibm-cover-slide__label {
+  font-size: var(--ibm-font-size-xs);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: var(--ibm-spacing-04);
+}
+
+.ibm-cover-slide__title {
+  font-size: var(--ibm-font-size-5xl);
+  font-weight: 600;
+  color: var(--ibm-white);
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  margin-bottom: var(--ibm-spacing-05);
+  max-width: 90%;
+}
+
+.ibm-cover-slide__subtitle {
+  font-size: var(--ibm-font-size-lg);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  max-width: 85%;
+}
+
+.ibm-cover-slide__image {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.ibm-cover-slide__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Made with Bob */
