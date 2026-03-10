@@ -106,15 +106,23 @@ If everything is working, you should see:
 
 ## 🛑 Stopping the Application
 
-### Using Stop Script
+### If Running in Foreground Mode
+
+Press `Ctrl+C` in the terminal where the application is running.
+
+### If Running in Detached Mode
 
 ```bash
 ./scripts/stop.sh
 ```
 
-### Manual Stop
+This will stop all Streamlit processes.
 
-Press `Ctrl+C` in the terminal where the application is running.
+### Viewing Logs (Detached Mode)
+
+```bash
+tail -f streamlit.log
+```
 
 ## 🔧 Troubleshooting
 

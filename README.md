@@ -65,14 +65,30 @@ All samples are adapted to use **local Ollama** with the **granite3-dense** mode
 
 ### Starting the Application
 
+**Foreground Mode (default):**
 ```bash
 ./scripts/launch.sh
 ```
 
+**Detached Mode (background):**
+```bash
+./scripts/launch.sh --detached
+# or
+./scripts/launch.sh -d
+```
+
 ### Stopping the Application
 
+**Foreground mode:** Press `Ctrl+C`
+
+**Detached mode or all instances:**
 ```bash
 ./scripts/stop.sh
+```
+
+**View logs (detached mode):**
+```bash
+tail -f streamlit.log
 ```
 
 ### Pushing to GitHub

@@ -291,10 +291,13 @@ Directly return the final JSON structure. Do not output anything else.
             retrieved_images = st.session_state['vision_retrieved_images']
             
             with st.expander(f"🖼️ View Retrieved Page Images ({len(retrieved_images)} pages)"):
-                cols = st.columns(min(3, len(retrieved_images)))
-                for idx, img_path in enumerate(retrieved_images[:6]):  # Show max 6 images
-                    with cols[idx % 3]:
-                        st.image(img_path, caption=f"Page {Path(img_path).stem.split('_')[1]}", use_container_width=True)
+                if len(retrieved_images) > 0:
+                    cols = st.columns(min(3, len(retrieved_images)))
+                    for idx, img_path in enumerate(retrieved_images[:6]):  # Show max 6 images
+                        with cols[idx % 3]:
+                            st.image(img_path, caption=f"Page {Path(img_path).stem.split('_')[1]}", use_container_width=True)
+                else:
+                    st.info("No page images were retrieved. This might happen if the search didn't find relevant pages.")
             
             if st.button("✨ Generate Answer with Vision", type="primary", key="vision_generate_answer"):
                 with st.spinner("Generating answer using visual context..."):

@@ -37,13 +37,44 @@ pip install -q -r requirements.txt
 echo ""
 echo "✅ Setup complete!"
 echo ""
-echo "🌐 Starting Streamlit application..."
-echo "📍 The application will open in your browser at http://localhost:8501"
-echo ""
-echo "Press Ctrl+C to stop the application"
-echo ""
 
-# Start Streamlit
-streamlit run app.py
+# Check if user wants detached mode
+if [ "$1" = "--detached" ] || [ "$1" = "-d" ]; then
+    echo "🌐 Starting Streamlit application in detached mode..."
+    echo "📍 Application will run at http://localhost:8501"
+    echo ""
+    
+    # Start Streamlit in background
+    nohup streamlit run app.py > streamlit.log 2>&1 &
+    STREAMLIT_PID=$!
+    
+    # Wait a moment for startup
+    sleep 3
+    
+    # Check if process is still running
+    if ps -p $STREAMLIT_PID > /dev/null; then
+        echo "✅ Application started successfully!"
+        echo "📍 Process ID: $STREAMLIT_PID"
+        echo "📝 Logs: streamlit.log"
+        echo "🌐 URL: http://localhost:8501"
+        echo ""
+        echo "To stop: ./scripts/stop.sh"
+        echo "To view logs: tail -f streamlit.log"
+    else
+        echo "❌ Failed to start application"
+        echo "Check streamlit.log for errors"
+        exit 1
+    fi
+else
+    echo "🌐 Starting Streamlit application..."
+    echo "📍 The application will open in your browser at http://localhost:8501"
+    echo ""
+    echo "Press Ctrl+C to stop the application"
+    echo "💡 Tip: Use './scripts/launch.sh --detached' to run in background"
+    echo ""
+    
+    # Start Streamlit in foreground
+    streamlit run app.py
+fi
 
 # Made with Bob

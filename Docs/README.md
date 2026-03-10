@@ -74,14 +74,27 @@ Get your API key from: https://dash.pageindex.ai/api-keys
 1. **Clone or download the repository**
 
 2. **Run the launch script**:
+   
+   **Foreground Mode (default):**
    ```bash
    ./scripts/launch.sh
+   ```
+
+   **Detached Mode (background):**
+   ```bash
+   ./scripts/launch.sh --detached
+   # or
+   ./scripts/launch.sh -d
    ```
 
    This script will:
    - Create a virtual environment
    - Install all dependencies
    - Start the application
+   
+   **Foreground mode**: Keeps terminal attached (Ctrl+C to stop)
+   
+   **Detached mode**: Runs in background, saves output to `streamlit.log`
 
 ### Manual Installation
 

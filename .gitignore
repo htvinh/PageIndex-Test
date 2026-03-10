@@ -27,6 +27,7 @@ Thumbs.db
 temp/
 pdf_images/
 *.log
+streamlit.log
 
 # Exclude folders starting with underscore
 _*/
