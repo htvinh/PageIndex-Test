@@ -1,3 +1,4 @@
+# app.py
 """
 PageIndex Testing Application
 A Streamlit UI for testing PageIndex samples with local Ollama

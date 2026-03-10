@@ -1,3 +1,4 @@
+# vision_rag.py
 """
 Vision RAG Demo Module
 Based on vision_RAG_pageindex.ipynb
