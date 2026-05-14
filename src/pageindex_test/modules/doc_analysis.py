@@ -32,22 +32,34 @@ class DocAnalysisDemo:
         manifest = self.pi_client.get_manifest()
         # Upload new
         uploaded_files = st.file_uploader("Upload new PDFs", type=['pdf'], key="doc_upload", accept_multiple_files=True)
-        if uploaded_files and st.button("Process", key="proc_btn"):
-            with st.spinner("Processing..."):
-                manifest = self.pi_client.get_manifest()
-                for uploaded_file in uploaded_files:
-                    # Check if filename exists
-                    already_indexed = any(d['title'] == uploaded_file.name for d in manifest)
-                    
-                    if already_indexed:
-                        if not st.checkbox(f"Document '{uploaded_file.name}' is already indexed. Re-index?", key=f"reindex_{uploaded_file.name}"):
-                            continue
-                            
-                    temp_path = Path("temp") / uploaded_file.name
-                    temp_path.parent.mkdir(exist_ok=True)
-                    with open(temp_path, "wb") as f: f.write(uploaded_file.getbuffer())
-                    self.pi_client.submit_document(str(temp_path), enable_vision=st.session_state.get('enable_vision', False))
-                    temp_path.unlink()
+        
+        # Manifest Refresh
+        if st.button("Refresh Registry"): st.rerun()
+        
+        if uploaded_files:
+            manifest = self.pi_client.get_manifest()
+            to_process = []
+            
+            for uf in uploaded_files:
+                already_indexed = any(d['title'] == uf.name for d in manifest)
+                if already_indexed:
+                    if st.checkbox(f"Re-index existing document: {uf.name}?", key=f"re_{uf.name}"):
+                        to_process.append((uf, True))
+                else:
+                    to_process.append((uf, False))
+            
+            if st.button("Process Selected", key="proc_btn"):
+                with st.spinner("Processing..."):
+                    for uf, is_update in to_process:
+                        temp_path = Path("temp") / uf.name
+                        temp_path.parent.mkdir(exist_ok=True)
+                        with open(temp_path, "wb") as f: f.write(uf.getbuffer())
+                        
+                        if is_update:
+                            self.pi_client.update_document(str(temp_path), enable_vision=st.session_state.get('enable_vision', False))
+                        else:
+                            self.pi_client.submit_document(str(temp_path), enable_vision=st.session_state.get('enable_vision', False))
+                        temp_path.unlink()
                     st.rerun()
         # Multi-select
         manifest = self.pi_client.get_manifest()

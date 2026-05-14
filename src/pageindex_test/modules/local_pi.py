@@ -35,7 +35,7 @@ class LocalPageIndexClient:
             enable_vision: If True, extracts images for every page.
         """
         file_path = Path(file_path)
-        doc_id = f"local_{file_path.stem}_{hash(str(file_path)) % 10000}"
+        doc_id = file_path.stem
         
         # Check if already processed
         tree_path = self.storage_dir / f"{doc_id}.json"
@@ -66,13 +66,17 @@ class LocalPageIndexClient:
                 image_path = image_dir / f"page_{i + 1}.jpg"
                 pix.save(str(image_path))
             
-            # Generate summary for the page
-            summary_prompt = f"Summarize the following document page in 1-2 concise sentences. TEXT: {text[:4000]}"
+            # Generate summary for the page (using text)
+            summary_prompt = f"""Summarize the following document page in 1-2 concise sentences. 
+            CRITICAL: If the page contains numerical data (ages, limits, dates, percentages, monetary values), ensure these are preserved in the summary.
+
+            TEXT: {text[:4000]}"""
             summary = self.llm.get_response(
                 prompt=summary_prompt, 
-                system="You are an assistant that summarizes document pages.",
+                system="You are an assistant that creates accurate summaries. Never lose numerical constraints.",
                 message=f"--- 📝 Processing Page {i+1}/{num_pages} "
             )
+
             
             pages_data.append({
                 "node_id": f"page_{i+1}",
@@ -118,6 +122,32 @@ class LocalPageIndexClient:
                 return json.load(f)
         return {"status": "not_found"}
     
+    def update_document(self, file_path: str, enable_vision: bool = False) -> Dict[str, str]:
+        """Delete existing index data and re-process."""
+        file_path = Path(file_path)
+        doc_id = file_path.stem
+        
+        # Remove existing
+        tree_path = self.storage_dir / f"{doc_id}.json"
+        meta_path = self.storage_dir / f"{doc_id}_meta.json"
+        image_dir = self.storage_dir / doc_id / "images"
+        
+        if tree_path.exists(): tree_path.unlink()
+        if meta_path.exists(): meta_path.unlink()
+        import shutil
+        if image_dir.exists(): shutil.rmtree(image_dir)
+            
+        return self.submit_document(str(file_path), enable_vision)
+    
+    def get_tree(self, doc_id: str, node_summary: bool = True) -> Dict[str, Any]:
+        """Get the document tree"""
+        tree_path = self.storage_dir / f"{doc_id}.json"
+        if tree_path.exists():
+            with open(tree_path, "r") as f:
+                tree = json.load(f)
+                return {"result": tree}
+        return {"result": None}
+
     def get_manifest(self) -> List[Dict[str, Any]]:
         """Return a manifest of all processed documents"""
         manifest = []
@@ -134,13 +164,4 @@ class LocalPageIndexClient:
                         data["title"] = tree.get("title", doc_id)
                 manifest.append(data)
         return manifest
-    
-    def get_tree(self, doc_id: str, node_summary: bool = True) -> Dict[str, Any]:
-        """Get the document tree"""
-        tree_path = self.storage_dir / f"{doc_id}.json"
-        if tree_path.exists():
-            with open(tree_path, "r") as f:
-                tree = json.load(f)
-                return {"result": tree}
-        return {"result": None}
 
