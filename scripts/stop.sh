@@ -6,7 +6,7 @@
 echo "🛑 Stopping PageIndex Testing Application..."
 
 # Find and kill Streamlit processes
-PIDS=$(pgrep -f "streamlit run app.py")
+PIDS=$(pgrep -f "streamlit run src/pageindex_test/main.py")
 
 if [ -z "$PIDS" ]; then
     echo "ℹ️  No running Streamlit application found"
@@ -17,7 +17,7 @@ else
     sleep 2
     
     # Force kill if still running
-    PIDS=$(pgrep -f "streamlit run app.py")
+    PIDS=$(pgrep -f "streamlit run src/pageindex_test/main.py")
     if [ ! -z "$PIDS" ]; then
         echo "⚠️  Force stopping..."
         kill -9 $PIDS
@@ -34,4 +34,3 @@ fi
 
 echo "✨ Done!"
 
-# Made with Bob

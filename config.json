@@ -1,0 +1,15 @@
+{
+  "ollama": {
+    "url": "http://localhost:11434",
+    "models": ["gemma4:e4b", "gemma4:26b-a4b"],
+    "default_model": "granite3-dense:8b"
+  },
+  "omlx": {
+    "url": "http://localhost:8000/v1",
+    "models": ["gemma-4-E4B-it-MLX-8bit", "gemma-4-26B-A4B-it-MLX-8bit"],
+    "default_model": "gemma-4-E4B-it-MLX-8bit"
+  },
+  "storage": {
+    "root": "_local_storage"
+  }
+}

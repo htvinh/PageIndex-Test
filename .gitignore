@@ -26,6 +26,7 @@ Thumbs.db
 # Application specific
 temp/
 pdf_images/
+_local_storage/
 *.log
 streamlit.log
 

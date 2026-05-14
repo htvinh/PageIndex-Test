@@ -13,9 +13,8 @@ if [ ! -f .env ]; then
     echo "⚠️  Warning: .env file not found!"
     echo "📝 Creating .env from .env.example..."
     cp .env.example .env
-    echo "✅ Created .env file. Please edit it with your API key before continuing."
+    echo "✅ Created .env file."
     echo ""
-    read -p "Press Enter to continue or Ctrl+C to exit and configure .env..."
 fi
 
 # Check if virtual environment exists
@@ -45,7 +44,7 @@ if [ "$1" = "--detached" ] || [ "$1" = "-d" ]; then
     echo ""
     
     # Start Streamlit in background
-    nohup streamlit run app.py > streamlit.log 2>&1 &
+    nohup streamlit run src/pageindex_test/main.py > streamlit.log 2>&1 &
     STREAMLIT_PID=$!
     
     # Wait a moment for startup
@@ -74,7 +73,6 @@ else
     echo ""
     
     # Start Streamlit in foreground
-    streamlit run app.py
+    streamlit run src/pageindex_test/main.py
 fi
 
-# Made with Bob
